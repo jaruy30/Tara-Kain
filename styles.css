@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    margin: 20px;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 5px;
+}
+
+.popup {
+    display: none;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+body {
+    font-family: 'Great Vibes', cursive;
+    text-align: center;
+    margin: 0;
+    background-color: #f9f4f5; /* Soft pastel color for the background */
+}
+
+.container {
+    padding: 30px;
+}
+
+h1 {
+    
+
+    height: 20%;
+    font-size: 55px;
+    text-align: center;
+    color: beige;
+    background-color: #CBA077;
+    margin-bottom: 0%;
+    margin-top: 0%;
+    margin-left: 0px;
+    padding: 5px;
+    font-family: Georgia;
+    text-shadow: 1px 2px #5A4938;
+    border:  5px solid #5A4938;
+    border-radius: 5px;
+}
+
+.buttons {
+    margin: 20px;
+}
+
+button {
+    font-size: 40px;
+    padding: 12px 24px;
+    margin: 10px;
+    border:  5px solid #5A4938;
+    border-radius: 5px;
+    background-color: #CBA077;
+    font-family: Helvetica;
+    text-shadow: 1px 2px #5A4938;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #CBA077; /* Lighter shade on hover for a soft effect */
+}
+
+.popup {
+    display: none;
+    background-color: beige;
+    border: 1px solid #5A4938; /* Romantic color for the border */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    font-family: Helvetica;
+    text-shadow: 1px 2px #5A4938;
+    font-size: 36px;
+    color: #CBA077; /* Romantic color for the popup text */
+}
+
+/* Add a smooth fade-in animation for the popup */
+.popup.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
