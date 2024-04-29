@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Management</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .btn {
+        padding: 6px 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    
+    .btn-edit {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    .btn-delete {
+        background-color: #f44336;
+        color: white;
+    }
+    
+    .btn-save, .btn-cancel {
+        display: none;
+    }
+    
+    .btn-update, .btn-cancel-edit {
+        display: inline-block;
+    }
+</style>
+</head>
+<body>
+
+<h2>Reservation Table</h2>
+
+<table id="tenantTable">
+    <thead>
+        <tr>
+            <th>Tenant ID</th>
+            <th>Tenant Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Room Type</th>
+            <th>Status</th>
+            <th>Amount Paid</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Tenant records will be inserted here dynamically -->
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><input type="text" id="TenantId" placeholder="ID"></td>
+            <td><input type="text" id="TenantName" placeholder="Name"></td>
+            <td><input type="text" id="Date" placeholder="Date"></td>
+            <td><input type="text" id="Time" placeholder="Time"></td>
+            <td><input type="text" id="Contact" placeholder="Contact"></td>
+            <td><input type="text" id="Email" placeholder="Email"></td>
+            <td><input type="text" id="RoomType" placeholder="RoomType"></td>
+            <td><input type="text" id="Status" placeholder="Status"></td>
+            <td><input type="text" id="AmountPaid" placeholder="Amount Paid"></td>
+            <td><button onclick="addTenant()">Add</button></td>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+    // Sample tenant data
+    var tenants = [];
+
+    // Function to display tenant records
+    function displayTenants() {
+        var tableBody = document.querySelector("#tenantTable tbody");
+        tableBody.innerHTML = '';
+
+        tenants.forEach(function(tenant, index) {
+            var row = tableBody.insertRow();
+
+            var idCell = row.insertCell(0);
+            var nameCell = row.insertCell(1);
+            var dateCell = row.insertCell(2);
+            var timeCell = row.insertCell(3);
+            var contactCell = row.insertCell(4);
+            var emailCell = row.insertCell(5);
+            var roomTypeCell = row.insertCell(6);
+            var statusCell = row.insertCell(7);
+            var amountPaidCell = row.insertCell(8);
+            var actionsCell = row.insertCell(9);
+
+            idCell.textContent = tenant.id;
+            nameCell.textContent = tenant.name;
+            dateCell.textContent = tenant.date;
+            timeCell.textContent = tenant.time;
+            contactCell.textContent = tenant.contact;
+            emailCell.textContent = tenant.email;
+            roomTypeCell.textContent = tenant.roomType;
+            statusCell.textContent = tenant.status;
+            amountPaidCell.textContent = tenant.amountPaid;
+
+            var editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("btn", "btn-edit");
+            editButton.onclick = function() { editTenant(index); };
+
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("btn", "btn-delete");
+            deleteButton.onclick = function() { deleteTenant(index); };
+
+            var saveButton = document.createElement("button");
+            saveButton.textContent = "Save";
+            saveButton.classList.add("btn", "btn-save");
+            saveButton.onclick = function() { saveTenant(index); };
+
+            var cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.classList.add("btn", "btn-cancel");
+            cancelButton.onclick = function() { cancelEditTenant(index); };
+
+            actionsCell.appendChild(editButton);
+            actionsCell.appendChild(deleteButton);
+            actionsCell.appendChild(saveButton);
+            actionsCell.appendChild(cancelButton);
+        });
+    }
+
+    // Function to add a new tenant
+    function addTenant() {
+        var id = document.getElementById("TenantId").value;
+        var name = document.getElementById("TenantName").value;
+        var date = document.getElementById("Date").value;
+        var time = document.getElementById("Time").value;
+        var contact = document.getElementById("Contact").value;
+        var email = document.getElementById("Email").value;
+        var roomType = document.getElementById("RoomType").value;
+        var status = document.getElementById("Status").value;
+        var amountPaid = document.getElementById("AmountPaid").value;
+        
+        if (id && name && date && time && contact && email && roomType && status && amountPaid) {
+            tenants.push({ id: id, name: name, date: date, time: time, contact: contact, email: email, roomType: roomType, status: status, amountPaid: amountPaid });
+            displayTenants();
+            document.getElementById("TenantId").value = "";
+            document.getElementById("TenantName").value = "";
+            document.getElementById("Date").value = "";
+            document.getElementById("Time").value = "";
+            document.getElementById("Contact").value = "";
+            document.getElementById("Email").value = "";
+            document.getElementById("RoomType").value = "";
+            document.getElementById("Status").value = "";
+            document.getElementById("AmountPaid").value = "";
+        } else {
+            alert("Please enter all tenant details.");
+        }
+    }
+
+    // Function to edit an existing tenant
+    function editTenant(index) {
+        var row = document.querySelector("#tenantTable tbody").rows[index];
+        var id = row.cells[0].textContent;
+        var name = row.cells[1].textContent;
+        var date = row.cells[2].textContent;
+        var time = row.cells[3].textContent;
+        var contact = row.cells[4].textContent;
+        var email = row.cells[5].textContent;
+        var roomType = row.cells[6].textContent;
+        var status = row.cells[7].textContent;
+        var amountPaid = row.cells[8].textContent;
+
+        row.cells[0].innerHTML = '<input type="text" value="' + id + '">';
+        row.cells[1].innerHTML = '<input type="text" value="' + name + '">';
+        row.cells[2].innerHTML = '<input type="text" value="' + date + '">';
+        row.cells[3].innerHTML = '<input type="text" value="' + time + '">';
+        row.cells[4].innerHTML = '<input type="text" value="' + contact + '">';
+        row.cells[5].innerHTML = '<input type="text" value="' + email + '">';
+        row.cells[6].innerHTML = '<input type="text" value="' + roomType + '">';
+        row.cells[7].innerHTML = '<input type="text" value="' + status + '">';
+        row.cells[8].innerHTML = '<input type="text" value="' + amountPaid + '">';
+
+        row.querySelector(".btn-edit").style.display = "none";
+        row.querySelector(".btn-delete").style.display = "none";
+        row.querySelector(".btn-save").style.display = "inline-block";
+        row.querySelector(".btn-cancel").style.display = "inline-block";
+    }
+
+    // Function to save changes to an edited tenant
+    function saveTenant(index) {
+        var row = document.querySelector("#tenantTable tbody").rows[index];
+        var id = row.cells[0].querySelector("input").value;
+        var name = row.cells[1].querySelector("input").value;
+        var date = row.cells[2].querySelector("input").value;
+        var time = row.cells[3].querySelector("input").value;
+        var contact = row.cells[4].querySelector("input").value;
+        var email = row.cells[5].querySelector("input").value;
+        var roomType = row.cells[6].querySelector("input").value;
+        var status = row.cells[7].querySelector("input").value;
+        var amountPaid = row.cells[8].querySelector("input").value;
+
+        tenants[index] = { id: id, name: name, date: date, time: time, contact: contact, email: email, roomType: roomType, status: status, amountPaid: amountPaid };
+
+        displayTenants();
+    }
+
+    // Function to cancel editing a tenant
+    function cancelEditTenant(index) {
+        displayTenants();
+    }
+
+    // Function to delete a tenant
+    function deleteTenant(index) {
+        tenants.splice(index, 1);
+        displayTenants();
+    }
+
+    // Initial display of tenant records
+    displayTenants();
+</script>
+
+</body>
+</html>
